@@ -26,7 +26,8 @@ symbol_table = {
     "R15": 15,
     "SCREEN": 16384,
     "KBD": 24576,
-    "ITSR0": 17  # Se Agrega ITSR0 a la tabla de símbolos con la dirección indicada
+    "ITSR0": 17  
+# Se Agrega ITSR0 a la tabla de símbolos con la dirección indicada
 }
 
 dest_dict = {
@@ -80,16 +81,18 @@ jump_dict = {
     "JNE": "101",
     "JLE": "110",
     "JMP": "111",
-    "ITSR0": "000"  # Agregar la etiqueta ITSR0 al diccionario
+    "ITSR0": "000" 
+    
+    # Agregar la etiqueta ITSR0 al diccionario
 }
 
-next_available_address = [16]  # Asigna la variable next_available_address
+next_available_address = [16]  
+# Asigna la variable next_available_address
 
 
 def parse_A_instruction(instruction):
     global next_available_address
     if instruction.isdigit():
-        # Aqui se utilizara un ancho de 16 bits
         return to_binary(int(instruction), 16)
     else:
         symbol = instruction[1:]
@@ -101,7 +104,9 @@ def parse_A_instruction(instruction):
 
 
 def parse_C_instruction(instruction):
-    if "(" in instruction:  #Omite las etiquetas
+    if "(" in instruction:  
+        
+        #Omite las etiquetas
         return None
 
     if "=" in instruction:
@@ -116,7 +121,8 @@ def parse_C_instruction(instruction):
         comp = rest
         jump = ""
 
-    if jump and jump.startswith('('):  # Verificar si es una etiqueta
+    if jump and jump.startswith('('): 
+         # Verificar si es una etiqueta
         # Salto vacío
         return "111" + comp_dict["0"] + dest_dict.get(dest, "000") + jump_dict.get("", "000")
     elif jump:  # Si hay una parte de salto en la instrucción
@@ -127,7 +133,8 @@ def parse_C_instruction(instruction):
 
 def first_pass(lines):
     global next_available_address
-    next_available_address = 16  # Asigna el valor a la variable next_available_address en 16
+    next_available_address = 16 
+     # Asigna el valor a la variable next_available_address en 16
     address = 0
     for line in lines:
         line = line.strip()
@@ -161,7 +168,8 @@ def assemble(asm_file, hack_file):
 
         if binary_line is not None:
             binary_lines.append(binary_line)
-            print(binary_line)  # Este codigo binario imprime y crea los archivos.Hack
+            print(binary_line) 
+             # Este codigo binario imprime y crea los archivos.Hack
 
     with open(hack_file, "w") as f:
         for line in binary_lines:
